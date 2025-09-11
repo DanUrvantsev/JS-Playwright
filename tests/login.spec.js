@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 const {password, email} = require ("../user");
 
-test('test', async ({ page }) => {
+test('authorization', async ({ page }) => {
   await page.goto('https://netology.ru/profile');
   await page.getByRole('link', { name: 'Авторизоваться' }).click();
   await page.getByText('Войти по почте').click();
@@ -11,5 +11,6 @@ test('test', async ({ page }) => {
   await page.getByRole('textbox', { name: 'Пароль' }).fill(password);
   await page.getByRole('textbox', { name: 'Пароль' }).press('Enter');
   await page.getByTestId('login-submit-btn').click();
-  await expect(page).toHaveURL('https://netology.ru/profile/9564287');
+  const iframe = page.frameLocator('[data-testid="advanced-iframe"]');
+  await expect(iframe.locator('body')).toContainText(/Press in the following order|Нажмите в таком порядке/);
 });
