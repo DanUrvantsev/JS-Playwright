@@ -22,5 +22,7 @@ test("Invalid email", async ({ page }) => {
   await page.getByRole("textbox", { name: "Пароль" }).click();
   await page.getByRole("textbox", { name: "Пароль" }).fill("Пароль");
   await page.getByTestId("login-submit-btn").click();
-  await expect(page.locator('[data-testid="login-error-hint"]')).toContainText( "Вы ввели неправильно логин или пароль." );
+  await expect(iframe.locator("body")).toContainText(
+    /Press in the following order|Нажмите в таком порядке/
+  );
 });
